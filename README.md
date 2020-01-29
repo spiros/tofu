@@ -36,7 +36,9 @@ python tofu.py -n 100
 Wrote synthetic-20200128181342.csv shape (100,21946).
 ```
 
-Generate synthetic data for 100 patients for fields _3_ and _20002_.
+Generate synthetic data for 100 patients for fields _3_ and _20002_ 
+
+*Note*: you do not have to specify the eid in the list of fields since all generated datasets include it by default.
 
 ```bash
 python tofu.py -n 100 --field 3 20002
