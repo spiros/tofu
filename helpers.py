@@ -134,6 +134,7 @@ def gen_dummy_data_for_field(field_id, n) -> list:
         dummy_values = MIN_DATE + pd.to_timedelta(
                                     pd.np.random.randint(d, size=n),
                                     unit='d')
+        dummy_values = dummy_values.tolist()
 
     # Categorical single choice (21) or multiple (22)
     elif field_data_type in (21, 22):
@@ -230,7 +231,9 @@ def insert_missingness(a, perc) -> list:
     """
 
     total_values = len(a)
+
     howmany = int(total_values * perc / 100)
+
     random_ind_to_empty = np.random.randint(0,
                                             total_values,
                                             howmany)
