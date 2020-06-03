@@ -55,6 +55,13 @@ python tofu.py -n 100 --field 3 20002 -j 10
 Wrote synthetic-20200128191124.csv shape (100,103).
 ```
 
+Generate synthetic data for 100 patients for fields _3_ and _20002_ 
+and write decoded fields and values (human readable format).
+
+```bash
+python tofu.py -n 100 --field 3 20002 -H
+```
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 

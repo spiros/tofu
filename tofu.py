@@ -37,6 +37,9 @@ parser.add_argument('-o', '--out', type=str,
                     default=helpers.gen_output_filename(),
                     help="specify output file, defaults to timestamped file.")
 
+parser.add_argument('-H', '--human', action='store_true',
+                    help="decode values into human readable format")
+
 args = parser.parse_args()
 
 if args.verbose:
@@ -84,11 +87,13 @@ if __name__ == '__main__':
         for i in range(field_instance_max):
             for a in range(field_array_max):
 
-                field_canonical_name = helpers.gen_field_name(field_id, i, a)
+                field_canonical_name = helpers.gen_field_name(field_id, i, a, args.human)
 
                 dummy_values = helpers.gen_dummy_data_for_field(
                                                         field_id,
                                                         TOTAL_PATIENTS)
+                if args.human:
+                    dummy_values = helpers.decode_values(dummy_values, field_id)
 
                 if args.jitter > 0:
                     dummy_values = helpers.insert_missingness(

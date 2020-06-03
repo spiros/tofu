@@ -68,3 +68,12 @@ def test_missing():
     a = np.random.randint(0, 100, 100).tolist()
     new_a = helpers.insert_missingness(a, 10)
     assert pytest.approx(new_a.count(np.nan), 2) == 10
+
+
+def test_decoding_fields():
+    diseases_encoded = helpers.gen_dummy_data_for_field(20002, 100)
+    diseases_decoded = helpers.decode_values(diseases_encoded, 20002)
+    assert len(set(diseases_encoded)) == len(set(diseases_decoded))
+
+    for i in range(len(diseases_encoded)):
+        assert(diseases_encoded[i] != diseases_decoded[i])
