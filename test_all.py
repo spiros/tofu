@@ -71,9 +71,8 @@ def test_missing():
 
 
 def test_decoding_fields():
-    diseases_encoded = helpers.gen_dummy_data_for_field(20002, 100)
-    diseases_decoded = helpers.decode_values(diseases_encoded, 20002)
-    assert len(set(diseases_encoded)) == len(set(diseases_decoded))
+    diseases_encoded = ['1545', '1164', '1446']
+    diseases_decoded_expected = ['neck problem/injury', 'pancreatic disease', 'anaemia']
 
-    for i in range(len(diseases_encoded)):
-        assert(diseases_encoded[i] != diseases_decoded[i])
+    diseases_decoded = helpers.decode_values(diseases_encoded, 20002)
+    assert diseases_decoded_expected == diseases_decoded
