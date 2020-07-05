@@ -1,8 +1,8 @@
 # Tofu
 
-![Coagulation](https://github.com/spiros/tofu/workflows/Python%20application/badge.svg)
+![Coagulation](https://github.com/spiros/tofu/workflows/Python%20application/badge.svg) [![DOI](https://zenodo.org/badge/236825382.svg)](https://zenodo.org/badge/latestdoi/236825382)
 
-[![DOI](https://zenodo.org/badge/236825382.svg)](https://zenodo.org/badge/latestdoi/236825382)
+
 
 <a><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Japanese_SilkyTofu_%28Kinugoshi_Tofu%29.JPG/1920px-Japanese_SilkyTofu_%28Kinugoshi_Tofu%29.JPG" 
 title="tofu" alt="tofu" width="20%" height="20%"></a>
