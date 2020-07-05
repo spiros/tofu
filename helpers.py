@@ -175,7 +175,7 @@ def gen_dummy_data_for_field(field_id, n) -> list:
     return dummy_values
 
 
-def gen_field_name(field_id, i, a) -> str:
+def gen_field_name(field_id, i, a, human) -> str:
     """
     Generate field column name composed of the field id
     the instance number and the array index.
@@ -186,6 +186,7 @@ def gen_field_name(field_id, i, a) -> str:
         field_id = UK Biobank field identifier (int)
         i = instance id (int)
         a = array index (int)
+        human = human readable format (boolean)
 
     Output
     -------
@@ -194,7 +195,12 @@ def gen_field_name(field_id, i, a) -> str:
 
     """
 
-    return "%d-%d.%d" % (field_id, i, a)
+    if human:
+        field_metadata = get_field_metadata(field_id)
+        field_title = field_metadata['title']
+        return "%s-%d.%d" % (field_title, i, a)
+    else:
+        return "%d-%d.%d" % (field_id, i, a)
 
 
 def get_now() -> str:
@@ -241,3 +247,34 @@ def insert_missingness(a, perc) -> list:
         a[i] = np.nan
 
     return a
+
+
+def decode_values(values, field_id) -> list:
+    """
+    Replace encoded values with human readable labels
+
+    Arguments
+    ----------
+        values = values of data (list)
+        field_id = UK Biobank field identifier (int)
+
+    Output
+    -------
+        decoded values (list)
+    """
+    field_metadata = get_field_metadata(field_id)
+    field_encoding_id = field_metadata['encoding_id']
+
+    m = (DF_ENCODINGS['encoding_id'] == field_encoding_id)
+    m = m & (DF_ENCODINGS['selectable'] != 0)
+    df_value_lookup = DF_ENCODINGS[m]
+
+    return values if (field_encoding_id == 0) else [decode_value(x, df_value_lookup) for x in values]
+
+
+def decode_value(value, df_value_lookup) -> str:
+    expanded_value = df_value_lookup.loc[df_value_lookup['value'] == value]
+    if len(expanded_value) > 0:
+        return expanded_value['meaning'].iloc[0]
+    else:
+        return value
