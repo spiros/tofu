@@ -63,9 +63,15 @@ python tofu.py -n 100 --field 3 20002 -H
 ```
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
+### General points
+* Pull requests are welcome! :)
+* For major changes, please open an issue first to discuss what you would like to change.
+* Please make sure to update tests as appropriate.
+
+### Contributors
+
+* [Isuru Liyanage](https://github.com/theisuru) implemented the -H flag for humans
 
 ## Cite as
 
