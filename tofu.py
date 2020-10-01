@@ -6,12 +6,8 @@ Script used to generate synthetic data for UK Biobank.
 
 import pandas as pd
 from tqdm import tqdm
-import numpy as np
 import argparse
 import helpers
-from pathlib import Path
-import sys
-import traceback
 
 
 def jitter_type(x):
@@ -64,22 +60,7 @@ if __name__ == '__main__':
     if args.field is not None:
         fields = set(args.field)
     elif args.file is not None:
-        filepath = Path(args.file)
-        if not filepath.is_file():
-            raise FileNotFoundError(f"Error: input file {filepath} does not exist.")
-        with open(filepath) as source:
-            for line in source:
-                try:
-                    if line[0] == '#' or not line.split():
-                        continue
-                    else:
-                        field = int(line.split()[0])
-                except Exception as e:
-                    print("Error while trying to parse fields from file. "
-                          "Please check file content.")
-                    print(traceback.format_exc(limit=1))
-                    sys.exit(1)
-                fields.add(field)
+        fields = helpers.get_fields_from_file(args.file)
 
     if fields:
         all_field_ids = helpers.get_field_ids()
