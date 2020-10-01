@@ -1,6 +1,7 @@
 
 import helpers
 import numpy as np
+from pathlib import Path
 import pytest
 
 
@@ -76,3 +77,7 @@ def test_decoding_fields():
 
     diseases_decoded = helpers.decode_values(diseases_encoded, 20002)
     assert diseases_decoded_expected == diseases_decoded
+
+def test_fields_from_file():
+    fields = set([31,34,21000])
+    assert fields == helpers.get_fields_from_file('test/test_fields.txt')
