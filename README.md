@@ -73,7 +73,10 @@ python tofu.py -n 100 --field 3 20002 -H
 
 ### Contributors
 
-* [Isuru Liyanage](https://github.com/theisuru) implemented the -H flag for humans
+Many thanks to all who have contributed to this tool:
+
+* [Isuru Liyanage](https://github.com/theisuru) for implementing the -H flag for humans
+* [Alessia Peviani](https://github.com/alepev) for implementing the -F flag
 
 ## Cite as
 
