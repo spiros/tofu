@@ -7,6 +7,9 @@ data.
 import numpy as np
 import pandas as pd
 import datetime
+from typing import Set
+from pathlib import Path
+import sys, traceback
 
 MIN_DATE = pd.to_datetime('1910-01-01')
 MAX_DATE = pd.to_datetime('1990-12-31')
@@ -278,3 +281,31 @@ def decode_value(value, df_value_lookup) -> str:
         return expanded_value['meaning'].iloc[0]
     else:
         return value
+
+
+def get_fields_from_file(filepath : str) -> Set[int]:
+    '''
+    Parses fields from a (text) file.
+    Each field should be on a separate line;
+    both empty and commented lines (#) will be ignored.
+    :param filepath: path to the file with the list of fields (string).
+    :return: a set of fields extracted from the file (Set[int]).
+    '''
+    filepath = Path(filepath)
+    if not filepath.is_file():
+        raise FileNotFoundError(f"Error: input file {filepath} does not exist.")
+    fields = set()
+    with open(filepath) as source:
+        for line in source:
+            try:
+                if line[0] == '#' or not line.split():
+                    continue
+                else:
+                    field = int(line.split()[0])
+            except Exception:
+                print("Error while trying to parse fields from file. "
+                      "Please check file content.")
+                print(traceback.format_exc(limit=1))
+                sys.exit(1)
+            fields.add(field)
+    return fields

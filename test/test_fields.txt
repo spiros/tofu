@@ -1,0 +1,8 @@
+# test fields
+31
+34 35 # the second number is not parsed
+
+
+# 52 # this number is not parsed (commented out)
+ 21000 # oops there is a traling space here! well, it is parsed correctly
+31 # a redundant number! no problem, the output is a set

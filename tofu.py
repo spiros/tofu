@@ -6,7 +6,6 @@ Script used to generate synthetic data for UK Biobank.
 
 import pandas as pd
 from tqdm import tqdm
-import numpy as np
 import argparse
 import helpers
 
@@ -21,8 +20,12 @@ def jitter_type(x):
 parser = argparse.ArgumentParser(
     description='Generate synthetic UK Biobank baseline data.')
 
-parser.add_argument('-f', '--field', type=int, nargs='*',
+group = parser.add_mutually_exclusive_group()
+group.add_argument('-f', '--field', type=int, nargs='*',
                     help="specify one or more field ids to use")
+group.add_argument('-F', '--file', type=str,
+                    help="specify input file with a list of fields to use, one per line; "
+                         "lines starting with # will be ignored")
 
 parser.add_argument('-n', type=int, default=10,
                     help="specify numbet of patients to generate")
@@ -35,7 +38,7 @@ parser.add_argument('-j', '--jitter', type=jitter_type, default=0,
 
 parser.add_argument('-o', '--out', type=str,
                     default=helpers.gen_output_filename(),
-                    help="specify output file, defaults to timestamped file.")
+                    help="specify output file, defaults to timestamped file")
 
 parser.add_argument('-H', '--human', action='store_true',
                     help="decode values into human readable format")
@@ -53,9 +56,15 @@ if __name__ == '__main__':
     df_output['eid'] = helpers.gen_fake_ids(TOTAL_PATIENTS)
 
     # User has supplied field list
+    fields = set()
     if args.field is not None:
+        fields = set(args.field)
+    elif args.file is not None:
+        fields = helpers.get_fields_from_file(args.file)
+
+    if fields:
         all_field_ids = helpers.get_field_ids()
-        fields_to_process = set(all_field_ids).intersection(set(args.field))
+        fields_to_process = set(all_field_ids).intersection(fields)
         assert len(fields_to_process) > 0, "Fields not found in lookup file."
     else:
         fields_to_process = helpers.get_field_ids()
