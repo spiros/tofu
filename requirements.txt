@@ -1,5 +1,5 @@
 pytest
 pandas==0.25.3
-numpy==1.16.4
+numpy==1.22.0
 scipy==1.3.0
 tqdm==4.32.1
